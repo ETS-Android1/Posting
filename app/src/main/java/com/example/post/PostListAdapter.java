@@ -1,6 +1,7 @@
 package com.example.post;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.app.AlertDialog;
 
 import java.util.ArrayList;
 
@@ -83,4 +86,5 @@ public class PostListAdapter extends BaseAdapter{
 
         listItems.add(listItem);
     }
+
 }

@@ -108,22 +108,6 @@ public class ImgStore extends AppCompatActivity {
         }
     }
 
-//    //저장소 권한얻기
-//    public void isStoragePermissionGranted() {
-//        if (Build.VERSION.SDK_INT >= 29) {
-//            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                    == PackageManager.PERMISSION_GRANTED) {
-//                chooseImage();//PERMISSION 허용하면 사진 선택
-//            } else {
-//                Log.v(TAG, "Permission is revoked");
-//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-//            }
-//        } else {
-//            Log.v(TAG, "Permission is granted");
-//            chooseImage();
-//        }
-//    }
-
     //사진 선택
     private void chooseImage() {
         Intent intent = new Intent();

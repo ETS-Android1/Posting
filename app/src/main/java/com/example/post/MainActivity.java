@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.post.aws.S3Uploader;
 import com.example.post.aws.S3Utils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -86,6 +87,13 @@ public class MainActivity extends AppCompatActivity {
             adapter.addItem(writerName[i], dateList[i], titleList[i], thumbID[i]);
             adapter.notifyDataSetChanged();
         }
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, MakePost.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.horizon_enter, R.anim.horizon_exit);
+        });
     }//여기까지 onCreate
 
     //저장소 권한얻기
@@ -103,4 +111,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Permission Success", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
