@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="300dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!--Profile Image-->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_profile"></ImageView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:orientation="vertical">
+
+                <!--Writer-->
+                <TextView
+                    android:id="@+id/Writer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="start|center"
+                    android:text="Writer"
+                    android:textAlignment="textStart"></TextView>
+
+                <!--Date-->
+                <TextView
+                    android:id="@+id/Date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="start|center"
+                    android:text="Date"
+                    android:textAlignment="textStart"></TextView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <!--Edit Button-->
+                <ImageButton
+                    android:id="@+id/EditBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_edit_btn"
+                    android:background="@color/white"></ImageButton>
+
+                <!--Delete Button-->
+                <ImageButton
+                    android:id="@+id/DeleteBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_delete_btn"
+                    android:background="@color/white"></ImageButton>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!--Title-->
+        <TextView
+            android:id="@+id/Title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center"
+            android:text="Title"
+            android:textAlignment="textStart"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="15dp"></TextView>
+
+        <!--Thumbnail Image-->
+        <ImageView
+            android:id="@+id/Thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            app:srcCompat="@drawable/thumbnail1"
+            android:scaleType="centerCrop"></ImageView>
+
+        <!--BorderLine-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:layout_below="@+id/Thumbnail"
+            android:layout_marginTop="5dp"
+            android:background="@color/grey"></ImageView>
+    </LinearLayout>
+</RelativeLayout>
