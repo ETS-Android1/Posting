@@ -53,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        isStoragePermissionGranted();//저장소 권한
-
-
         /*밑줄긋기*/
         textView = (TextView)findViewById(R.id.BandNews);
         String NewsString = "라이온스클럽 소식";
@@ -88,8 +85,10 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
 
+        //게시물 작성 플로팅 버튼
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
+            isStoragePermissionGranted();//저장소 권한
             Intent intent = new Intent(MainActivity.this, MakePost.class);
             startActivity(intent);
             overridePendingTransition(R.anim.horizon_enter, R.anim.horizon_exit);
@@ -111,6 +110,4 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Permission Success", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }
