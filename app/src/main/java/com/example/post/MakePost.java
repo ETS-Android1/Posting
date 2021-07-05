@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -62,7 +63,7 @@ public class MakePost extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rv);
 
-        Button btn_getImage = findViewById(R.id.getImage);
+        ImageButton btn_getImage = findViewById(R.id.getImage);
         btn_getImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,6 +145,7 @@ public class MakePost extends AppCompatActivity {
                 uploadImageTos3(UriList[j]);
         }
 
+        finish();
         return super.onOptionsItemSelected(item);
     }
 

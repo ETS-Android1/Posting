@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MakePost"></activity>
+        <activity android:name=".ViewPost"></activity>
     </application>
 
 </manifest>

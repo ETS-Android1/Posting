@@ -3,6 +3,7 @@ package com.example.post;
 public class PostListItem {
     private String writer;
     private String title;
+    private String contents;
     private String date;
     private int imgResource;
 
@@ -22,6 +23,15 @@ public class PostListItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    //Contetns
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 
     //Date
