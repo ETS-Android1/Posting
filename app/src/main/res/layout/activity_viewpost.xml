@@ -66,10 +66,10 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    app:srcCompat="@drawable/ic_ok"
-                    tools:ignore="VectorDrawableCompat"
+                    android:enabled="false"
                     android:visibility="invisible"
-                    android:enabled="false"></ImageButton>
+                    app:srcCompat="@drawable/ic_ok"
+                    tools:ignore="VectorDrawableCompat"></ImageButton>
 
                 <!--Edit Button-->
                 <ImageButton
@@ -90,6 +90,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@color/white"
+                    android:onClick="OnDeleteHandler"
                     app:srcCompat="@drawable/ic_delete_btn"
                     tools:ignore="VectorDrawableCompat"></ImageButton>
             </LinearLayout>
@@ -115,6 +116,7 @@
                     android:layout_marginRight="5dp"
                     android:text="제목"
                     android:textColor="@color/black"
+                    android:textCursorDrawable="@color/black"
                     android:textSize="19sp"
                     android:textStyle="bold" />
 
@@ -125,9 +127,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:text="내용"
                     android:background="@null"
+                    android:text="내용"
                     android:textColor="@color/black"
+                    android:textCursorDrawable="@color/black"
                     android:textSize="17.6dp"
                     android:textStyle="normal" />
 

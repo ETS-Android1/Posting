@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -31,10 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.post.aws.S3Uploader;
 import com.example.post.aws.S3Utils;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.ArrayList;
-
 public class MakePost extends AppCompatActivity {
     S3Uploader s3uploaderObj;
     String urlFromS3 = null;
@@ -48,6 +43,9 @@ public class MakePost extends AppCompatActivity {
     private Toolbar toolbar;
     int count = 0;
 
+    EditText edit_title;
+    EditText edit_article;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +54,9 @@ public class MakePost extends AppCompatActivity {
         s3uploaderObj = new S3Uploader(MakePost.this);//Uploader 객체
         progressDialog = new ProgressDialog(MakePost.this);
 
+        edit_title = (EditText) findViewById(R.id.maketitle);
+        edit_article = (EditText) findViewById(R.id.makecontents);
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,6 +64,7 @@ public class MakePost extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rv);
 
+        //사진 가져오기 버튼
         ImageButton btn_getImage = findViewById(R.id.getImage);
         btn_getImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +90,7 @@ public class MakePost extends AppCompatActivity {
         adapter = new ListAdapter();
 
         if (data.getClipData() == null)
-            Toast.makeText(MakePost.this, "No Image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MakePost.this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
 
         else {
             ClipData clipData = data.getClipData();
@@ -96,7 +98,7 @@ public class MakePost extends AppCompatActivity {
             Log.d("카운트", String.valueOf(count));
 
             if (clipData.getItemCount() > 10)
-                Toast.makeText(MakePost.this, "You have up to 10 choices.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MakePost.this, "최대 10개의 이미지만 가능합니다.", Toast.LENGTH_SHORT).show();
 
             else if (clipData.getItemCount() == 1) {
                 Uri imageUri = data.getData();
@@ -140,9 +142,18 @@ public class MakePost extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.complete) {
-            for (int j = 0; j < count; j++)
-                uploadImageTos3(UriList[j]);
+            if ((edit_title.getText().toString().equals("") || edit_title.getText().toString() == null) || (edit_article.getText().toString().equals("") || edit_article.getText().toString() == null))
+                Toast.makeText(MakePost.this, "값을 입력하세요.", Toast.LENGTH_SHORT).show();
+
+            else {
+                if (item.getItemId() == R.id.complete) {
+                    for (int j = 0; j < count; j++)
+                        uploadImageTos3(UriList[j]);
+
+                    //TODO
+                    //제목, 내용 DB저장
+
+            }
         }
 
         finish();

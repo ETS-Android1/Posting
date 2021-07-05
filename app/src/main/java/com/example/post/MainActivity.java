@@ -79,11 +79,12 @@ public class MainActivity extends AppCompatActivity {
         // 썸네일 파일을 배열로 초기화
         Integer[] thumbID = {R.drawable.thumbnail1, R.drawable.thumbnail2, R.drawable.thumbnail3, R.drawable.thumbnail4, R.drawable.thumbnail5};
 
+        //Custom ListView Adapter연결
         listView = (ListView)findViewById(R.id.PostListView);
-
         adapter = new PostListAdapter(MainActivity.this);
         listView.setAdapter(adapter);
 
+        //Custom ListView Item 추가
         for(int i = 0; i < 5; i++){
             adapter.addItem(writerName[i], dateList[i], titleList[i], contents, thumbID[i]);
             adapter.notifyDataSetChanged();
@@ -109,11 +110,12 @@ public class MainActivity extends AppCompatActivity {
                 String contents = ((PostListItem)adapter.getItem(position)).getContents();
                 int imgres = ((PostListItem)adapter.getItem(position)).getImgResource();
 
-                intent.putExtra("Writer", writer);
-                intent.putExtra("Title", title);
-                intent.putExtra("Contents", contents);
-                intent.putExtra("Date", date);
-                intent.putExtra("Imgres", imgres);
+                //ViewPost.class로 넘겨주는 값
+                intent.putExtra("Writer", writer);//작성자
+                intent.putExtra("Title", title);//제목
+                intent.putExtra("Contents", contents);//내용
+                intent.putExtra("Date", date);//날짜
+                intent.putExtra("Imgres", imgres);//이미지 값
 
                 startActivity(intent);
                 overridePendingTransition(R.anim.horizon_enter, R.anim.horizon_exit);

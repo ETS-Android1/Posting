@@ -1,6 +1,7 @@
 package com.example.post;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import org.w3c.dom.Text;
 
@@ -54,7 +58,7 @@ public class PostListAdapter extends BaseAdapter{
         TextView txt_title = (TextView)convertView.findViewById(R.id.Title);
         TextView txt_contents = (TextView)convertView.findViewById(R.id.Content);
         ImageView img_thumbnail = (ImageView) convertView.findViewById(R.id.Thumbnail);
-        ImageButton btn_delete = (ImageButton)convertView.findViewById(R.id.DeleteBtn);
+//        ImageButton btn_delete = (ImageButton)convertView.findViewById(R.id.DeleteBtn);
 
         PostListItem listItem = listItems.get(position);
 
@@ -66,13 +70,13 @@ public class PostListAdapter extends BaseAdapter{
         img_thumbnail.setImageResource(listItem.getImgResource());
 
         // 리스트 아이템 삭제
-        btn_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listItems.remove(position);
-                notifyDataSetChanged();
-            }
-        });
+//        btn_delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                listItems.remove(position);
+//                notifyDataSetChanged();
+//            }
+//        });
 
         return convertView;
     }

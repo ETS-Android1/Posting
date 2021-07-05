@@ -10,7 +10,7 @@
     <include layout="@layout/toolbar_main" />
 
     <EditText
-        android:id="@+id/title"
+        android:id="@+id/maketitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -34,10 +34,9 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/article"
-                android:layout_width="wrap_content"
+                android:id="@+id/makecontents"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@null"
@@ -53,7 +52,7 @@
                 android:id="@+id/rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/article"
+                android:layout_below="@id/makecontents"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
