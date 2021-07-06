@@ -37,7 +37,7 @@ public class MakePost extends AppCompatActivity {
     Uri UriList[] = new Uri[10];
 
     RecyclerView recyclerView;
-    ListAdapter adapter;
+    ListAdapter adapter = new ListAdapter();
     ItemTouchHelper helper;
     ProgressDialog progressDialog;
     private Toolbar toolbar;
@@ -64,6 +64,15 @@ public class MakePost extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rv);
 
+        recyclerView.setAdapter(adapter);
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager);
+
+        helper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
+        helper.attachToRecyclerView(recyclerView);
+
         //사진 가져오기 버튼
         ImageButton btn_getImage = findViewById(R.id.getImage);
         btn_getImage.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +96,6 @@ public class MakePost extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        adapter = new ListAdapter();
 
         if (data.getClipData() == null)
             Toast.makeText(MakePost.this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
@@ -104,6 +112,7 @@ public class MakePost extends AppCompatActivity {
                 Uri imageUri = data.getData();
                 SelectedImage selectedImage = new SelectedImage(imageUri);
                 adapter.addItem(selectedImage);
+                adapter.notifyItemInserted(0);
             }
 
             else if (clipData.getItemCount() <= 10 && clipData.getItemCount() > 1) {
@@ -112,6 +121,7 @@ public class MakePost extends AppCompatActivity {
                     try {
                         SelectedImage selectedImage = new SelectedImage(UriList[i]);
                         adapter.addItem(selectedImage);
+                        adapter.notifyItemInserted(0);
                         Log.i("selected img: ", UriList[i].toString());
                     } catch (Exception e) {
                         Log.e(TAG, "File select error", e);
@@ -120,15 +130,6 @@ public class MakePost extends AppCompatActivity {
             }
 
         }
-
-        recyclerView.setAdapter(adapter);
-
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(manager);
-
-        helper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
-        helper.attachToRecyclerView(recyclerView);
     }
 
     //상단 확인버튼 표시
