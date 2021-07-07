@@ -162,9 +162,15 @@ public class MakePost extends AppCompatActivity {
                     Date mdate = new Date(now);
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
                     String date = sdf.format(mdate);
+                    //이미지들의 주소를 하나의 문자열에 저장
+                    StringBuffer fullImagePath = new StringBuffer("");
 
-                    for (int j = 0; j < count; j++)
-                        uploadImageTos3(UriList[j]);
+                    for (int j = 0; j < count; j++) {
+                        String imgPath = getFilePathFromURI(UriList[j]);
+                        uploadImageTos3(imgPath);
+                        fullImagePath.append(imgPath.substring(imgPath.lastIndexOf("/")+1));
+                        fullImagePath.append("&");
+                    }
 
                     //TODO
                     //제목, 내용 DB저장
@@ -188,7 +194,7 @@ public class MakePost extends AppCompatActivity {
                         }
                     };
 
-                    PostTextRequest postRequest = new PostTextRequest(title, article, date, responseListener);
+                    PostRequest postRequest = new PostRequest(title, article, date, fullImagePath.substring(0, fullImagePath.length()-1), responseListener);
                     RequestQueue queue = Volley.newRequestQueue(MakePost.this);
                     queue.add(postRequest);
             }
@@ -200,8 +206,7 @@ public class MakePost extends AppCompatActivity {
 
     //업로드 함수
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void uploadImageTos3(Uri UrifromList) {
-        final String path = getFilePathFromURI(UrifromList);
+    private void uploadImageTos3(String path) {
         if (path != null) {
             showLoading();
             s3uploaderObj.initUpload(path);
