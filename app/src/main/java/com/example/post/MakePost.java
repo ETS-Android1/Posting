@@ -130,7 +130,6 @@ public class MakePost extends AppCompatActivity {
 
             else if (clipData.getItemCount() <= 10 && clipData.getItemCount() > 1) {
                 for (int i = 0; i < count; i++) {
-                    //UriList[i] = clipData.getItemAt(i).getUri();
                     UriList[i] = compressImage(clipData.getItemAt(i).getUri());
                     try {
                         //SelectedImage selectedImage = new SelectedImage(UriList[i]);
