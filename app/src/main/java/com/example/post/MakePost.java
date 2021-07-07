@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,8 +27,17 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.post.aws.S3Uploader;
 import com.example.post.aws.S3Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MakePost extends AppCompatActivity {
     S3Uploader s3uploaderObj;
@@ -149,12 +157,40 @@ public class MakePost extends AppCompatActivity {
 
             else {
                 if (item.getItemId() == R.id.complete) {
+                    //현재 날짜, 시각
+                    long now = System.currentTimeMillis();
+                    Date mdate = new Date(now);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+                    String date = sdf.format(mdate);
+
                     for (int j = 0; j < count; j++)
                         uploadImageTos3(UriList[j]);
 
                     //TODO
                     //제목, 내용 DB저장
+                    String title = edit_title.getText().toString();
+                    String article = edit_article.getText().toString();
 
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                boolean success = jsonObject.getBoolean("success");
+                                if(success) {
+                                    Toast.makeText(getApplicationContext(), "정상적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+
+                    PostTextRequest postRequest = new PostTextRequest(title, article, date, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(MakePost.this);
+                    queue.add(postRequest);
             }
         }
 
