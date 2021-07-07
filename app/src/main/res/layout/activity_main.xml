@@ -14,43 +14,43 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="1">
 
             <!--Band Image-->
             <ImageView
                 android:id="@+id/BandImg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.2"
                 android:background="@color/grey"
                 app:srcCompat="@drawable/logo"></ImageView>
+        </LinearLayout>
 
-            <!--Band News Text-->
-            <TextView
-                android:id="@+id/BandNews"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:orientation="vertical">
+            <!--Post List-->
+            <ListView
+                android:id="@+id/PostListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/BandImg"
+                android:layout_weight="0.08"></ListView>
+
+            <Button
+                android:id="@+id/PlusBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/grey"
-                android:gravity="center"
-                android:text=""
-                android:textAlignment="center"
+                android:text="더보기"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"></TextView>
+                android:background="@drawable/grey_round"></Button>
         </LinearLayout>
-
-        <!--Post List-->
-        <ListView
-            android:id="@+id/PostListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/BandImg"
-            android:layout_weight="0.3"></ListView>
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/Frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

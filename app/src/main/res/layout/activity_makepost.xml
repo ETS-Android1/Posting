@@ -45,7 +45,8 @@
                 android:textColor="@color/black"
                 android:textColorHint="#999999"
                 android:textSize="17.6sp"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:textStyle="bold"/>
 
 
             <androidx.recyclerview.widget.RecyclerView

@@ -38,6 +38,8 @@
                     android:layout_weight="1"
                     android:gravity="start|center"
                     android:text="Writer"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:textAlignment="textStart"></TextView>
 
                 <!--Date-->
@@ -48,6 +50,8 @@
                     android:layout_weight="1"
                     android:gravity="start|center"
                     android:text="Date"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
                     android:textAlignment="textStart"></TextView>
             </LinearLayout>
 
@@ -95,6 +99,7 @@
             android:textAlignment="textStart"
             android:textSize="15sp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:layout_marginLeft="15dp"></TextView>
 
         <!--Contents-->
@@ -108,7 +113,9 @@
             android:textAlignment="textStart"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:layout_marginLeft="15dp"></TextView>
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/black"
+            android:singleLine="true"></TextView>
 
         <!--Thumbnail Image-->
         <ImageView

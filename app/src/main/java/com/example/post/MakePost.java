@@ -330,4 +330,8 @@ public class MakePost extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
+
+    public void BackBtn(View view){
+        finish();
+    }
 }

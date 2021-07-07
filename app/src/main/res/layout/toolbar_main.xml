@@ -8,11 +8,12 @@
     app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/close_btn"
+            android:id="@+id/BackBtn"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_back"
-            android:backgroundTint="@color/white"/>
+            android:backgroundTint="@color/white"
+            android:onClick="BackBtn"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,5 +23,4 @@
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"/>
-
 </androidx.appcompat.widget.Toolbar>

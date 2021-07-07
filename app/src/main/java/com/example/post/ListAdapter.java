@@ -40,6 +40,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ItemViewHolder
         return images.size();
     }
 
+
     public void addItem(SelectedImage selectedimage) {
         Log.i("Add Item: ", selectedimage.toString());
         images.add(selectedimage);

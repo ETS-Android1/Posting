@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class PostListAdapter extends BaseAdapter{
     private Context mContext;
     private ArrayList<PostListItem> listItems = new ArrayList<PostListItem>();
+    int size = 3;
 
     public PostListAdapter(Context context){
         this.mContext = context;
@@ -28,6 +29,14 @@ public class PostListAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
+        return size;
+    }
+
+    public void setCount(int size){
+        this.size = size;
+    }
+
+    public int getSize(){
         return listItems.size();
     }
 
