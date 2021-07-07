@@ -119,16 +119,18 @@ public class MakePost extends AppCompatActivity {
 
             else if (clipData.getItemCount() == 1) {
                 Uri imageUri = data.getData();
-                SelectedImage selectedImage = new SelectedImage(imageUri);
+                SelectedImage selectedImage = new SelectedImage(compressImage(imageUri));
                 adapter.addItem(selectedImage);
                 adapter.notifyItemInserted(0);
             }
 
             else if (clipData.getItemCount() <= 10 && clipData.getItemCount() > 1) {
                 for (int i = 0; i < count; i++) {
-                    UriList[i] = clipData.getItemAt(i).getUri();
+                    //UriList[i] = clipData.getItemAt(i).getUri();
+                    UriList[i] = compressImage(clipData.getItemAt(i).getUri());
                     try {
-                        SelectedImage selectedImage = new SelectedImage(UriList[i]);
+                        //SelectedImage selectedImage = new SelectedImage(UriList[i]);
+                        SelectedImage selectedImage = new SelectedImage(compressImage(UriList[i]));
                         adapter.addItem(selectedImage);
                         adapter.notifyItemInserted(0);
                         Log.i("selected img: ", UriList[i].toString());
@@ -139,6 +141,44 @@ public class MakePost extends AppCompatActivity {
             }
 
         }
+    }
+
+    public Uri compressImage(Uri uri) {
+        String filename = uri.getLastPathSegment();
+        Bitmap bitmap = null;
+
+        try {
+            bitmap = Images.Media.getBitmap(this.getContentResolver(), uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 4;
+
+        int width = 300; // 축소시킬 너비
+        int height = 300; // 축소시킬 높이
+        float bmpWidth = bitmap.getWidth();
+        float bmpHeight = bitmap.getHeight();
+
+        if (bmpWidth > width) {
+            // 원하는 너비보다 클 경우의 설정
+            float mWidth = bmpWidth / 100;
+            float scale = width/ mWidth;
+            bmpWidth *= (scale / 100);
+            bmpHeight *= (scale / 100);
+        } else if (bmpHeight > height) {
+            // 원하는 높이보다 클 경우의 설정
+            float mHeight = bmpHeight / 100;
+            float scale = height/ mHeight;
+            bmpWidth *= (scale / 100);
+            bmpHeight *= (scale / 100);
+        }
+
+        Bitmap resizedBmp = Bitmap.createScaledBitmap(bitmap, (int) bmpWidth, (int) bmpHeight, true);
+
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(), resizedBmp, filename, null);
+        return Uri.parse(path);
     }
 
     //상단 확인버튼 표시
