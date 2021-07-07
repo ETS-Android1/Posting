@@ -149,6 +149,7 @@ public class MakePost extends AppCompatActivity {
 
     public Uri compressImage(Uri uri) {
         String filename = uri.getLastPathSegment();
+        Log.d("파일이름", filename);
         Bitmap bitmap = null;
 
         try {
@@ -224,10 +225,6 @@ public class MakePost extends AppCompatActivity {
             edit_article.setError("내용을 입력하세요.");
             focusView = edit_article;
             cancel = true;
-        }
-
-        for(int i = 0; i < 10; i++){
-
         }
 
         if (cancel) {

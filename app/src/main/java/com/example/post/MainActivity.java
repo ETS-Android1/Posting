@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        isStoragePermissionGranted();//저장소 권한
+
         final ListView listView;
         PostListAdapter adapter;
         TextView textView;
@@ -93,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         //게시물 작성 플로팅 버튼
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            isStoragePermissionGranted();//저장소 권한
             Intent intent = new Intent(MainActivity.this, MakePost.class);
             startActivity(intent);
             overridePendingTransition(R.anim.horizon_enter, R.anim.horizon_exit);
