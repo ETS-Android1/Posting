@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +32,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.post.aws.S3Uploader;
 import com.example.post.aws.S3Utils;
+
+import java.io.IOException;
+
+import static android.provider.MediaStore.*;
 
 public class MakePost extends AppCompatActivity {
     S3Uploader s3uploaderObj;
@@ -87,9 +93,9 @@ public class MakePost extends AppCompatActivity {
     //사진 선택
     private void chooseImage() {
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.setType(Images.Media.CONTENT_TYPE);
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setData(Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, 2222);
     }
 
@@ -111,16 +117,18 @@ public class MakePost extends AppCompatActivity {
 
             else if (clipData.getItemCount() == 1) {
                 Uri imageUri = data.getData();
-                SelectedImage selectedImage = new SelectedImage(imageUri);
+                SelectedImage selectedImage = new SelectedImage(compressImage(imageUri));
                 adapter.addItem(selectedImage);
                 adapter.notifyItemInserted(0);
             }
 
             else if (clipData.getItemCount() <= 10 && clipData.getItemCount() > 1) {
                 for (int i = 0; i < count; i++) {
-                    UriList[i] = clipData.getItemAt(i).getUri();
+                    //UriList[i] = clipData.getItemAt(i).getUri();
+                    UriList[i] = compressImage(clipData.getItemAt(i).getUri());
                     try {
-                        SelectedImage selectedImage = new SelectedImage(UriList[i]);
+                        //SelectedImage selectedImage = new SelectedImage(UriList[i]);
+                        SelectedImage selectedImage = new SelectedImage(compressImage(UriList[i]));
                         adapter.addItem(selectedImage);
                         adapter.notifyItemInserted(0);
                         Log.i("selected img: ", UriList[i].toString());
@@ -131,6 +139,44 @@ public class MakePost extends AppCompatActivity {
             }
 
         }
+    }
+
+    public Uri compressImage(Uri uri) {
+        String filename = uri.getLastPathSegment();
+        Bitmap bitmap = null;
+
+        try {
+            bitmap = Images.Media.getBitmap(this.getContentResolver(), uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 4;
+
+        int width = 300; // 축소시킬 너비
+        int height = 300; // 축소시킬 높이
+        float bmpWidth = bitmap.getWidth();
+        float bmpHeight = bitmap.getHeight();
+
+        if (bmpWidth > width) {
+            // 원하는 너비보다 클 경우의 설정
+            float mWidth = bmpWidth / 100;
+            float scale = width/ mWidth;
+            bmpWidth *= (scale / 100);
+            bmpHeight *= (scale / 100);
+        } else if (bmpHeight > height) {
+            // 원하는 높이보다 클 경우의 설정
+            float mHeight = bmpHeight / 100;
+            float scale = height/ mHeight;
+            bmpWidth *= (scale / 100);
+            bmpHeight *= (scale / 100);
+        }
+
+        Bitmap resizedBmp = Bitmap.createScaledBitmap(bitmap, (int) bmpWidth, (int) bmpHeight, true);
+
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(), resizedBmp, filename, null);
+        return Uri.parse(path);
     }
 
     //상단 확인버튼 표시
@@ -195,10 +241,10 @@ public class MakePost extends AppCompatActivity {
     //업로드 할 사진의 경로 가져오기
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private String getFilePathFromURI(Uri selectedImageUri) {
-        String[] proj= {MediaStore.Images.Media.DATA};
+        String[] proj= {Images.Media.DATA};
         CursorLoader loader= new CursorLoader(this, selectedImageUri, proj, null, null, null);
         Cursor cursor= loader.loadInBackground();
-        int column_index= cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        int column_index= cursor.getColumnIndexOrThrow(Images.Media.DATA);
         cursor.moveToFirst();
         String result= cursor.getString(column_index);
         cursor.close();
