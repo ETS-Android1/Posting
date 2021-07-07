@@ -31,7 +31,7 @@ public class S3Uploader {
         ObjectMetadata myObjectMetadata = new ObjectMetadata();
         myObjectMetadata.setContentType("image/png");
         String mediaUrl = file.getName();
-        TransferObserver observer = transferUtility.upload(AWSKeys.BUCKET_NAME, "s3Example/" + mediaUrl,
+        TransferObserver observer = transferUtility.upload(AWSKeys.BUCKET_NAME, "PostImg/" + mediaUrl,
                 file, CannedAccessControlList.PublicRead);
         observer.setTransferListener(new UploadListener());
     }

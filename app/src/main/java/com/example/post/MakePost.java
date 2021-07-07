@@ -40,6 +40,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MakePost extends AppCompatActivity {
@@ -47,7 +48,7 @@ public class MakePost extends AppCompatActivity {
     String urlFromS3 = null;
     private String TAG = MakePost.class.getCanonicalName();
     Uri UriList[] = new Uri[10];
-
+    Uri FinalUriList[] = new Uri[10];
     RecyclerView recyclerView;
     ListAdapter adapter = new ListAdapter();
     ItemTouchHelper helper;
@@ -195,56 +196,86 @@ public class MakePost extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-            if ((edit_title.getText().toString().equals("") || edit_title.getText().toString() == null) || (edit_article.getText().toString().equals("") || edit_article.getText().toString() == null))
-                Toast.makeText(MakePost.this, "값을 입력하세요.", Toast.LENGTH_SHORT).show();
+        //TODO
+        //제목, 내용 DB저장
+        edit_title.setError(null);
+        edit_article.setError(null);
 
-            else {
-                if (item.getItemId() == R.id.complete) {
-                    //현재 날짜, 시각
-                    long now = System.currentTimeMillis();
-                    Date mdate = new Date(now);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-                    String date = sdf.format(mdate);
-                    //이미지들의 주소를 하나의 문자열에 저장
-                    StringBuffer fullImagePath = new StringBuffer("");
+        int size = adapter.getItemCount();
+        ArrayList<SelectedImage> img = adapter.images;
+        for(int i = 0; i < size; i++) {
+            FinalUriList[i] = img.get(i).getImage();
+        }
 
-                    for (int j = 0; j < count; j++) {
-                        String imgPath = getFilePathFromURI(UriList[j]);
-                        uploadImageTos3(imgPath);
-                        fullImagePath.append(imgPath.substring(imgPath.lastIndexOf("/")+1));
-                        fullImagePath.append("&");
-                    }
+        boolean cancel = false;
+        View focusView = null;
 
-                    //TODO
-                    //제목, 내용 DB저장
-                    String title = edit_title.getText().toString();
-                    String article = edit_article.getText().toString();
+        String title = edit_title.getText().toString();
+        String article = edit_article.getText().toString();
 
-                    Response.Listener<String> responseListener = new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                boolean success = jsonObject.getBoolean("success");
-                                if(success) {
-                                    Toast.makeText(getApplicationContext(), "정상적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+
+        if (title.isEmpty()) {
+            edit_title.setError("제목을 입력하세요.");
+            focusView = edit_title;
+            cancel = true;
+        }
+
+        if (article.isEmpty()) {
+            edit_article.setError("내용을 입력하세요.");
+            focusView = edit_article;
+            cancel = true;
+        }
+
+        for(int i = 0; i < 10; i++){
+
+        }
+
+        if (cancel) {
+            focusView.requestFocus();
+        } else {
+            if (item.getItemId() == R.id.complete) {
+                //현재 날짜, 시각
+                long now = System.currentTimeMillis();
+                Date mdate = new Date(now);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+                String date = sdf.format(mdate);
+                //이미지들의 주소를 하나의 문자열에 저장
+                StringBuffer fullImagePath = new StringBuffer("");
+
+                for (int j = 0; j < size; j++) {
+                    String imgPath = getFilePathFromURI(FinalUriList[j]);
+                    uploadImageTos3(imgPath);
+                    fullImagePath.append(imgPath.substring(imgPath.lastIndexOf("/") + 1));
+                    fullImagePath.append("&");
+                }
+
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("Success");
+                            if (success) {
+                                Toast.makeText(getApplicationContext(), "정상적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    };
+                    }
+                };
 
-                    PostRequest postRequest = new PostRequest(title, article, date, fullImagePath.substring(0, fullImagePath.length()-1), responseListener);
-                    RequestQueue queue = Volley.newRequestQueue(MakePost.this);
-                    queue.add(postRequest);
+                PostRequest postRequest = new PostRequest(title, article, date, fullImagePath.substring(0, fullImagePath.length() - 1), responseListener);
+                RequestQueue queue = Volley.newRequestQueue(MakePost.this);
+                queue.add(postRequest);
+                finish();
             }
         }
 
-        finish();
         return super.onOptionsItemSelected(item);
+
     }
 
     //업로드 함수
