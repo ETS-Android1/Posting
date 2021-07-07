@@ -4,12 +4,9 @@ import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,12 +27,17 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.post.aws.S3Uploader;
 import com.example.post.aws.S3Utils;
 
-import java.io.IOException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import static android.provider.MediaStore.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MakePost extends AppCompatActivity {
     S3Uploader s3uploaderObj;
@@ -93,9 +95,9 @@ public class MakePost extends AppCompatActivity {
     //사진 선택
     private void chooseImage() {
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(Images.Media.CONTENT_TYPE);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setData(Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, 2222);
     }
 
@@ -195,12 +197,46 @@ public class MakePost extends AppCompatActivity {
 
             else {
                 if (item.getItemId() == R.id.complete) {
-                    for (int j = 0; j < count; j++)
-                        uploadImageTos3(UriList[j]);
+                    //현재 날짜, 시각
+                    long now = System.currentTimeMillis();
+                    Date mdate = new Date(now);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+                    String date = sdf.format(mdate);
+                    //이미지들의 주소를 하나의 문자열에 저장
+                    StringBuffer fullImagePath = new StringBuffer("");
+
+                    for (int j = 0; j < count; j++) {
+                        String imgPath = getFilePathFromURI(UriList[j]);
+                        uploadImageTos3(imgPath);
+                        fullImagePath.append(imgPath.substring(imgPath.lastIndexOf("/")+1));
+                        fullImagePath.append("&");
+                    }
 
                     //TODO
                     //제목, 내용 DB저장
+                    String title = edit_title.getText().toString();
+                    String article = edit_article.getText().toString();
 
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                boolean success = jsonObject.getBoolean("success");
+                                if(success) {
+                                    Toast.makeText(getApplicationContext(), "정상적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+
+                    PostRequest postRequest = new PostRequest(title, article, date, fullImagePath.substring(0, fullImagePath.length()-1), responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(MakePost.this);
+                    queue.add(postRequest);
             }
         }
 
@@ -210,8 +246,7 @@ public class MakePost extends AppCompatActivity {
 
     //업로드 함수
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void uploadImageTos3(Uri UrifromList) {
-        final String path = getFilePathFromURI(UrifromList);
+    private void uploadImageTos3(String path) {
         if (path != null) {
             showLoading();
             s3uploaderObj.initUpload(path);
@@ -241,10 +276,10 @@ public class MakePost extends AppCompatActivity {
     //업로드 할 사진의 경로 가져오기
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private String getFilePathFromURI(Uri selectedImageUri) {
-        String[] proj= {Images.Media.DATA};
+        String[] proj= {MediaStore.Images.Media.DATA};
         CursorLoader loader= new CursorLoader(this, selectedImageUri, proj, null, null, null);
         Cursor cursor= loader.loadInBackground();
-        int column_index= cursor.getColumnIndexOrThrow(Images.Media.DATA);
+        int column_index= cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         String result= cursor.getString(column_index);
         cursor.close();
