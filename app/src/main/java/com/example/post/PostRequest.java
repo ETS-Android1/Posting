@@ -7,18 +7,19 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostTextRequest extends StringRequest {
+public class PostRequest extends StringRequest {
 
-    final static private String URL = "http://whdvm1.dothome.co.kr/Post/UploadText.php";
+    final static private String URL = "http://whdvm1.dothome.co.kr/Post/PostDB.php";
     private Map<String, String> map;
 
-    public PostTextRequest(String title, String article, String date, Response.Listener<String> listener) {
+    public PostRequest(String title, String article, String date, String fullImagePath, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
         map.put("title", title);
         map.put("article", article);
         map.put("date", date);
+        map.put("fullImagePath", fullImagePath);
     }
 
     @Override
