@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         Integer[] thumbID = {R.drawable.thumbnail1, R.drawable.thumbnail2, R.drawable.thumbnail3, R.drawable.thumbnail4, R.drawable.thumbnail5};
 
         String staticURL = "https://sikigobucket.s3.ap-northeast-2.amazonaws.com/PostImg/";
-        String[] img = {staticURL + "35.jpg", staticURL + "39.jpg", staticURL + "41.jpg", staticURL + "43.jpg", staticURL + "45.jpg"};
+        String[][] img = {{staticURL + "57399.jpg", staticURL + "57401.jpg", staticURL + "57403.jpg"}, {staticURL + "57409.jpg"}, {staticURL + "57411.jpg"},
+                {staticURL + "57413.jpg"}, {staticURL + "57415.jpg"}};
 
         //Custom ListView Adapter연결
         listView = (ListView) findViewById(R.id.PostListView);
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Custom ListView Item 추가
         for (int i = 0; i < 5; i++) {
-            adapter.addItem("관리자", dateList[i], titleList[i], contents, thumbID[i]);
+            adapter.addItem("관리자", dateList[i], titleList[i], contents, img[i]);
             adapter.notifyDataSetChanged();
         }
 
@@ -76,14 +77,17 @@ public class MainActivity extends AppCompatActivity {
                 String title = ((PostListItem) adapter.getItem(position)).getTitle();
                 String date = ((PostListItem) adapter.getItem(position)).getDate();
                 String contents = ((PostListItem) adapter.getItem(position)).getContents();
-                int imgres = ((PostListItem) adapter.getItem(position)).getImgResource();
+                String[] imgURL = ((PostListItem) adapter.getItem(position)).getImgResource();
+//                Log.d("유알엘", imgURL[0]);
+//                Log.d("유알엘", imgURL[1]);
+//                Log.d("유알엘", imgURL[2]);
 
                 //ViewPost.class로 넘겨주는 값
                 intent.putExtra("Writer", writer);//작성자
                 intent.putExtra("Title", title);//제목
                 intent.putExtra("Contents", contents);//내용
                 intent.putExtra("Date", date);//날짜
-                intent.putExtra("Imgres", imgres);//이미지 값
+                intent.putExtra("ImgURL", imgURL);//이미지 값
 
                 startActivity(intent);
                 overridePendingTransition(R.anim.horizon_enter, R.anim.horizon_exit);

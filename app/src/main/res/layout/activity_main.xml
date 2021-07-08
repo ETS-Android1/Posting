@@ -25,7 +25,7 @@
                 app:srcCompat="@drawable/logo"></ImageView>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
@@ -35,7 +35,6 @@
                 android:id="@+id/PostListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/BandImg"
                 android:layout_weight="0.08"></ListView>
 
             <Button
@@ -45,8 +44,9 @@
                 android:layout_weight="1"
                 android:text="더보기"
                 android:textColor="@color/black"
-                android:background="@drawable/grey_round"></Button>
-        </LinearLayout>
+                android:background="@drawable/grey_round"
+                android:layout_below="@+id/PostListView"></Button>
+        </RelativeLayout>
     </LinearLayout>
 
     <FrameLayout

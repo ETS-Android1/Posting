@@ -3,6 +3,7 @@ package com.example.post;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+
+import com.bumptech.glide.Glide;
 
 import org.w3c.dom.Text;
 
@@ -76,7 +79,7 @@ public class PostListAdapter extends BaseAdapter{
         txt_date.setText(listItem.getDate());
         txt_title.setText(listItem.getTitle());
         txt_contents.setText(listItem.getContents());
-        img_thumbnail.setImageResource(listItem.getImgResource());
+        Glide.with(mContext).load(listItem.getImgResource()[0]).into(img_thumbnail);
 
         // 리스트 아이템 삭제
 //        btn_delete.setOnClickListener(new View.OnClickListener() {
@@ -90,14 +93,14 @@ public class PostListAdapter extends BaseAdapter{
         return convertView;
     }
 
-    public void addItem(String writer, String date, String title, String contents, int imageresource){
+    public void addItem(String writer, String date, String title, String contents, String[] imgname){
         PostListItem listItem = new PostListItem();
 
         listItem.setWriter(writer);
         listItem.setDate(date);
         listItem.setTitle(title);
         listItem.setContents(contents);
-        listItem.setImgResource(imageresource);
+        listItem.setImgResource(imgname);
 
         listItems.add(listItem);
     }

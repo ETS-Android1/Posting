@@ -102,7 +102,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.1">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -132,22 +132,34 @@
                     android:textColor="@color/black"
                     android:textCursorDrawable="@color/black"
                     android:textSize="17.6dp"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    android:layout_below="@id/Viewtitle"/>
 
 
                 <!--Image ListView-->
-                <ListView
-                    android:id="@+id/Viewimglist"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:descendantFocusability="blocksDescendants"
-                    android:nestedScrollingEnabled="false"
-                    android:overScrollMode="never" />
-            </LinearLayout>
+                <HorizontalScrollView
+                    android:layout_width="400dp"
+                    android:layout_height="300dp"
+                    android:layout_below="@id/Viewcontents">
+                    <LinearLayout
+                        android:id="@+id/linear"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                    </LinearLayout>
+                </HorizontalScrollView>
+<!--                <ListView-->
+<!--                    android:id="@+id/Viewimglist"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginRight="5dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:descendantFocusability="blocksDescendants"-->
+<!--                    android:nestedScrollingEnabled="false"-->
+<!--                    android:overScrollMode="never" />-->
+            </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>

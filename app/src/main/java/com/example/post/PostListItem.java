@@ -5,7 +5,8 @@ public class PostListItem {
     private String title;
     private String contents;
     private String date;
-    private int imgResource;
+//    private int imgResource;
+    private String[] imgname;
 
     //Writer
     public String getWriter() {
@@ -44,12 +45,20 @@ public class PostListItem {
     }
 
     //Image
-    public int getImgResource() {
-        return imgResource;
+//    public int getImgResource() {
+//        return imgResource;
+//    }
+//
+//    public void setImgResource(int imgResource) {
+//        this.imgResource = imgResource;
+//    }
+
+    public String[] getImgResource() {
+        return imgname;
     }
 
-    public void setImgResource(int imgResource) {
-        this.imgResource = imgResource;
+    public void setImgResource(String[] imgname) {
+        this.imgname = imgname;
     }
 
 
