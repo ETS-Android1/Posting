@@ -36,16 +36,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.08"></ListView>
-
-            <Button
-                android:id="@+id/PlusBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="더보기"
-                android:textColor="@color/black"
-                android:background="@drawable/grey_round"
-                android:layout_below="@+id/PostListView"></Button>
         </RelativeLayout>
     </LinearLayout>
 

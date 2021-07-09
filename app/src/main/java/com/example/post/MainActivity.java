@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
         final ListView listView;
         PostListAdapter adapter;
-        Button PlusBtn = (Button) findViewById(R.id.PlusBtn);
+
+        View footer = getLayoutInflater().inflate(R.layout.plusbtn, null, false);
 
 
         /*리스트뷰*/
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Custom ListView Adapter연결
         listView = (ListView) findViewById(R.id.PostListView);
+        listView.addFooterView(footer);
         adapter = new PostListAdapter(MainActivity.this);
         listView.setAdapter(adapter);
 
@@ -90,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         /*더보기 버튼*/
+        Button PlusBtn = (Button) findViewById(R.id.PlusBtn);
         PlusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

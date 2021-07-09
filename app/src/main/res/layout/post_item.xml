@@ -124,7 +124,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.4"
             app:srcCompat="@drawable/thumbnail1"
-            android:scaleType="centerCrop"></ImageView>
+            android:scaleType="fitXY"></ImageView>
 
         <!--BorderLine-->
         <ImageView
