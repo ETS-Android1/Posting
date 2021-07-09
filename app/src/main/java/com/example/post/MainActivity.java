@@ -40,13 +40,10 @@ public class MainActivity extends AppCompatActivity {
         // 제목 문자 배열로 초기화
         String[] titleList = {"제목A", "제목B", "제목C", "제목D", "제목E"};
 
-        String contents = "In the culture of simulation, experiences on the Internet figure prominently. In cyberspace, we can talk, exchange ideas, and assume personae of our own creation. In an interactive computer game inspired by Star Trek, thousands of players spend up to eighty hours a week participating in intergalactic exploration and wars. They create characters who have romantic encounters, hold jobs and collect paychecks, attend rituals and celebrations, fall in love and get married. “This is more real than my real life,” says a character who turns out to be a man playing a woman. In this game the self is constructed and the rules of social interaction are built, not received. In another text-based game, each of nearly ten thousand players creates a character or several characters, specifying their genders and other physical and psychological attributes. The characters need not be human and there are more than two genders. Players are invited to help build the computer world itself. Indeed, the Internet links millions of people in new spaces that are changing the way of our thinking, the nature of our sexuality, the form of our communities, and our very identities.";
-
-        // 썸네일 파일을 배열로 초기화
-        Integer[] thumbID = {R.drawable.thumbnail1, R.drawable.thumbnail2, R.drawable.thumbnail3, R.drawable.thumbnail4, R.drawable.thumbnail5};
+        String contents = "In the culture of simulation, experiences on the Internet figure prominently.";
 
         String staticURL = "https://sikigobucket.s3.ap-northeast-2.amazonaws.com/PostImg/";
-        String[][] img = {{staticURL + "57399.jpg", staticURL + "57401.jpg", staticURL + "57403.jpg"}, {staticURL + "57409.jpg"}, {staticURL + "57411.jpg"},
+        String[][] imgName = {{staticURL + "57399.jpg", staticURL + "57401.jpg", staticURL + "57403.jpg"}, {staticURL + "57409.jpg"}, {staticURL + "57411.jpg"},
                 {staticURL + "57413.jpg"}, {staticURL + "57415.jpg"}};
 
         //Custom ListView Adapter연결
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Custom ListView Item 추가
         for (int i = 0; i < 5; i++) {
-            adapter.addItem("관리자", dateList[i], titleList[i], contents, img[i]);
+            adapter.addItem("관리자", dateList[i], titleList[i], contents, imgName[i]);
             adapter.notifyDataSetChanged();
         }
 
@@ -78,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
                 String date = ((PostListItem) adapter.getItem(position)).getDate();
                 String contents = ((PostListItem) adapter.getItem(position)).getContents();
                 String[] imgURL = ((PostListItem) adapter.getItem(position)).getImgResource();
-//                Log.d("유알엘", imgURL[0]);
-//                Log.d("유알엘", imgURL[1]);
-//                Log.d("유알엘", imgURL[2]);
 
                 //ViewPost.class로 넘겨주는 값
                 intent.putExtra("Writer", writer);//작성자
