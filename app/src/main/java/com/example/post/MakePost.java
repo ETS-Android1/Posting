@@ -110,38 +110,41 @@ public class MakePost extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data.getClipData() == null)
-            Toast.makeText(MakePost.this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
+        if(resultCode == RESULT_OK) {
+            if (data.getClipData() == null)
+                Toast.makeText(MakePost.this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
 
-        else {
-            ClipData clipData = data.getClipData();
-            count = clipData.getItemCount();
-            Log.d("카운트", String.valueOf(count));
+            else {
+                ClipData clipData = data.getClipData();
+                count = clipData.getItemCount();
+                Log.d("카운트", String.valueOf(count));
 
-            if (clipData.getItemCount() > 10)
-                Toast.makeText(MakePost.this, "최대 10개의 이미지만 가능합니다.", Toast.LENGTH_SHORT).show();
+                if (clipData.getItemCount() > 10)
+                    Toast.makeText(MakePost.this, "최대 10개의 이미지만 가능합니다.", Toast.LENGTH_SHORT).show();
 
-            else if (clipData.getItemCount() == 1) {
-                Uri imageUri = data.getData();
-                SelectedImage selectedImage = new SelectedImage(compressImage(imageUri));
-                adapter.addItem(selectedImage);
-                adapter.notifyItemInserted(0);
-            }
-
-            else if (clipData.getItemCount() <= 10 && clipData.getItemCount() > 1) {
-                for (int i = 0; i < count; i++) {
-                    UriList[i] = clipData.getItemAt(i).getUri();
-                    try {
-                        SelectedImage selectedImage = new SelectedImage(compressImage(UriList[i]));
-                        adapter.addItem(selectedImage);
-                        adapter.notifyItemInserted(0);
-                        Log.i("selected img: ", UriList[i].toString());
-                    } catch (Exception e) {
-                        Log.e(TAG, "File select error", e);
+                else if (clipData.getItemCount() == 1) {
+                    Uri imageUri = data.getData();
+                    SelectedImage selectedImage = new SelectedImage(compressImage(imageUri));
+                    adapter.addItem(selectedImage);
+                    adapter.notifyItemInserted(0);
+                } else if (clipData.getItemCount() <= 10 && clipData.getItemCount() > 1) {
+                    for (int i = 0; i < count; i++) {
+                        UriList[i] = compressImage(clipData.getItemAt(i).getUri());
+                        try {
+                            SelectedImage selectedImage = new SelectedImage(UriList[i]);
+                            adapter.addItem(selectedImage);
+                            adapter.notifyItemInserted(0);
+                            Log.i("selected img: ", UriList[i].toString());
+                        } catch (Exception e) {
+                            Log.e(TAG, "File select error", e);
+                        }
                     }
                 }
-            }
 
+            }
+        } else {
+            super.onActivityResult(requestCode,resultCode,data);
+            return;
         }
     }
 
@@ -250,9 +253,15 @@ public class MakePost extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("Success");
+                            boolean success = jsonObject.getBoolean("success");
                             if (success) {
+                                Log.i("her: ", "here");
                                 Toast.makeText(getApplicationContext(), "정상적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                                Log.i("Length:", String.valueOf(count));
+                                for (int i = 0; i < count; i++) {
+                                    Log.i("delete", String.valueOf(UriList[i]));
+                                    getContentResolver().delete(UriList[i], null, null);
+                                }
                             } else {
                                 Toast.makeText(getApplicationContext(), "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
                             }
@@ -286,7 +295,7 @@ public class MakePost extends AppCompatActivity {
                         hideLoading();
                         urlFromS3 = S3Utils.generates3ShareUrl(getApplicationContext(), path);
                         if (!TextUtils.isEmpty(urlFromS3)) {
-                            Toast.makeText(MakePost.this, "Uploaded Successfully!!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MakePost.this, "Uploaded Successfully!!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
