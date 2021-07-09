@@ -110,38 +110,42 @@ public class MakePost extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data.getClipData() == null)
-            Toast.makeText(MakePost.this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
+        if(resultCode == RESULT_OK) {
+            if (data.getClipData() == null)
+                Toast.makeText(MakePost.this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
 
-        else {
-            ClipData clipData = data.getClipData();
-            count = clipData.getItemCount();
-            Log.d("카운트", String.valueOf(count));
+            else {
+                ClipData clipData = data.getClipData();
+                count = clipData.getItemCount();
+                Log.d("카운트", String.valueOf(count));
 
-            if (clipData.getItemCount() > 10)
-                Toast.makeText(MakePost.this, "최대 10개의 이미지만 가능합니다.", Toast.LENGTH_SHORT).show();
+                if (clipData.getItemCount() > 10)
+                    Toast.makeText(MakePost.this, "최대 10개의 이미지만 가능합니다.", Toast.LENGTH_SHORT).show();
 
-            else if (clipData.getItemCount() == 1) {
-                Uri imageUri = data.getData();
-                SelectedImage selectedImage = new SelectedImage(compressImage(imageUri));
-                adapter.addItem(selectedImage);
-                adapter.notifyItemInserted(0);
-            }
+                else if (clipData.getItemCount() == 1) {
+                    Uri imageUri = data.getData();
+                    SelectedImage selectedImage = new SelectedImage(compressImage(imageUri));
+                    adapter.addItem(selectedImage);
+                    adapter.notifyItemInserted(0);
+                } else if (clipData.getItemCount() <= 10 && clipData.getItemCount() > 1) {
+                    for (int i = 0; i < count; i++) {
+                        UriList[i] = compressImage(clipData.getItemAt(i).getUri());
+                        try {
 
-            else if (clipData.getItemCount() <= 10 && clipData.getItemCount() > 1) {
-                for (int i = 0; i < count; i++) {
-                    UriList[i] = clipData.getItemAt(i).getUri();
-                    try {
-                        SelectedImage selectedImage = new SelectedImage(compressImage(UriList[i]));
-                        adapter.addItem(selectedImage);
-                        adapter.notifyItemInserted(0);
-                        Log.i("selected img: ", UriList[i].toString());
-                    } catch (Exception e) {
-                        Log.e(TAG, "File select error", e);
+                            SelectedImage selectedImage = new SelectedImage(UriList[i]);
+                            adapter.addItem(selectedImage);
+                            adapter.notifyItemInserted(0);
+                            Log.i("selected img: ", UriList[i].toString());
+                        } catch (Exception e) {
+                            Log.e(TAG, "File select error", e);
+                        }
                     }
                 }
-            }
 
+            }
+        } else {
+            super.onActivityResult(requestCode,resultCode,data);
+            return;
         }
     }
 
@@ -181,6 +185,7 @@ public class MakePost extends AppCompatActivity {
         Bitmap resizedBmp = Bitmap.createScaledBitmap(bitmap, (int) bmpWidth, (int) bmpHeight, true);
 
         String path = MediaStore.Images.Media.insertImage(getContentResolver(), resizedBmp, filename, null);
+
         return Uri.parse(path);
     }
 
@@ -265,6 +270,9 @@ public class MakePost extends AppCompatActivity {
                 PostRequest postRequest = new PostRequest(title, article, date, fullImagePath.substring(0, fullImagePath.length() - 1), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(MakePost.this);
                 queue.add(postRequest);
+                for (int i = 0; i < UriList.length; i++) {
+                    this.getContentResolver().delete(UriList[i], null, null);
+                }
                 finish();
             }
         }
