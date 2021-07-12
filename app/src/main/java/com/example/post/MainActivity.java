@@ -41,11 +41,12 @@ public class MainActivity extends AppCompatActivity {
         // 제목 문자 배열로 초기화
         String[] titleList = {"제목A", "제목B", "제목C", "제목D", "제목E"};
 
-        String contents = "In the culture of simulation, experiences on the Internet figure prominently.";
+        String contents = "이 소설의 주제는 순수한 사랑이라고 할 수 있다. 심지어 매번 징검다리의 한가운데에 앉아 있었다. 이는 소녀는 의도적으로 소년을 갈구하는 모습이고 소년은 서울 소녀의 꾀임에 넘어간 것이다.이 소설의 주제는 순수한 사랑이라고 할 수 있다. 심지어 매번 징검다리의 한가운데에 앉아 있었다. 이는 소녀는 의도적으로 소년을 갈구하는 모습이고 소년은 서울 소녀의 꾀임에 넘어간 것이다.";
+
 
         String staticURL = "https://sikigobucket.s3.ap-northeast-2.amazonaws.com/PostImg/";
-        String[][] imgName = {{staticURL + "57399.jpg", staticURL + "57401.jpg", staticURL + "57403.jpg"}, {staticURL + "57409.jpg"}, {staticURL + "57411.jpg"},
-                {staticURL + "57413.jpg"}, {staticURL + "57415.jpg"}};
+        String[][] imgName = {{staticURL + "57328.jpg", staticURL + "57329.jpg", staticURL + "57330.jpg"}, {staticURL + "57407.jpg"}, {staticURL + "57408 (2).jpg"},
+                {staticURL + "57408 (3).jpg"}, {staticURL + "57328.jpg"}};
 
         //Custom ListView Adapter연결
         listView = (ListView) findViewById(R.id.PostListView);

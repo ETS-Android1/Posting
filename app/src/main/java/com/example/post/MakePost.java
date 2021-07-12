@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.load.model.UriLoader;
 import com.example.post.aws.S3Uploader;
 import com.example.post.aws.S3Utils;
 
@@ -117,14 +118,13 @@ public class MakePost extends AppCompatActivity {
             else {
                 ClipData clipData = data.getClipData();
                 count = clipData.getItemCount();
-                Log.d("카운트", String.valueOf(count));
 
                 if (clipData.getItemCount() > 10)
                     Toast.makeText(MakePost.this, "최대 10개의 이미지만 가능합니다.", Toast.LENGTH_SHORT).show();
 
                 else if (clipData.getItemCount() == 1) {
-                    Uri imageUri = data.getData();
-                    SelectedImage selectedImage = new SelectedImage(compressImage(imageUri));
+                    UriList[0] = clipData.getItemAt(0).getUri();
+                    SelectedImage selectedImage = new SelectedImage(compressImage(UriList[0]));
                     adapter.addItem(selectedImage);
                     adapter.notifyItemInserted(0);
                 } else if (clipData.getItemCount() <= 10 && clipData.getItemCount() > 1) {
@@ -226,6 +226,10 @@ public class MakePost extends AppCompatActivity {
             edit_article.setError("내용을 입력하세요.");
             focusView = edit_article;
             cancel = true;
+        }else if(article.length() > 200){
+            edit_article.setError("200자 까지만 가능합니다.");
+            focusView = edit_article;
+            cancel = true;
         }
 
         if (cancel) {
@@ -258,9 +262,11 @@ public class MakePost extends AppCompatActivity {
                                 Log.i("her: ", "here");
                                 Toast.makeText(getApplicationContext(), "정상적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
                                 Log.i("Length:", String.valueOf(count));
-                                for (int i = 0; i < count; i++) {
-                                    Log.i("delete", String.valueOf(UriList[i]));
-                                    getContentResolver().delete(UriList[i], null, null);
+                                if(UriList.length > 0) {
+                                    for (int i = 0; i < count; i++) {
+                                        Log.i("delete", String.valueOf(UriList[i]));
+                                        getContentResolver().delete(UriList[i], null, null);
+                                    }
                                 }
                             } else {
                                 Toast.makeText(getApplicationContext(), "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
@@ -271,9 +277,15 @@ public class MakePost extends AppCompatActivity {
                     }
                 };
 
+                if(fullImagePath.length() > 1){
                 PostRequest postRequest = new PostRequest(title, article, date, fullImagePath.substring(0, fullImagePath.length() - 1), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(MakePost.this);
                 queue.add(postRequest);
+                }else{
+                    PostRequest postRequest = new PostRequest(title, article, date, null, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(MakePost.this);
+                    queue.add(postRequest);
+                }
                 finish();
             }
         }
@@ -339,6 +351,12 @@ public class MakePost extends AppCompatActivity {
     }
 
     public void BackBtn(View view){
+        if(UriList.length > 0) {
+            for (int i = 0; i < count; i++) {
+                Log.i("delete", String.valueOf(UriList[i]));
+                getContentResolver().delete(UriList[i], null, null);
+            }
+        }
         finish();
     }
 }

@@ -21,19 +21,26 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import me.relex.circleindicator.CircleIndicator3;
+
 public class ViewPost extends AppCompatActivity {
+    ViewPager2 viewPager2;
+    CircleIndicator3 indicator;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewpost);
 
         PostListAdapter adapter;
         final InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        viewPager2 = findViewById(R.id.viewPager2);
+        indicator = (CircleIndicator3)findViewById(R.id.indicator);
 
         //작성자 TextView
         TextView viewwriter = (TextView)findViewById(R.id.ViewWriter);
@@ -66,10 +73,6 @@ public class ViewPost extends AppCompatActivity {
         String title = intent.getStringExtra("Title");
         String contents = intent.getStringExtra("Contents");
         String[] imgURL = intent.getStringArrayExtra("ImgURL");
-//        Log.d("유알엘", imgURL[0]);
-//        Log.d("유알엘", imgURL[1]);
-//        Log.d("유알엘", imgURL[2]);
-
 
         //받아온 값 Setting
         viewwriter.setText(writer);
@@ -89,14 +92,12 @@ public class ViewPost extends AppCompatActivity {
 
         //TODO
         /*이미지 어떻게 표현할 것인지*/
-        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.linear);
-        for(int i = 0; i < imgURL.length; i++) {
-            ImageView imageView = new ImageView(this);
-            imageView.setId(i);
-            Glide.with(this).load(imgURL[i]).into(imageView);
-            linearLayout.addView(imageView);
-        }
-
+        ArrayList<DataPage> list = new ArrayList<>();
+        for(int i = 0; i < imgURL.length; i++)
+            list.add(new DataPage(imgURL[i]));
+        viewPager2.setAdapter(new ViewPagerAdapter(list));
+        indicator.setViewPager(viewPager2);
+        viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 
         //수정 버튼
         editbtn.setOnClickListener(new View.OnClickListener() {
@@ -149,7 +150,6 @@ public class ViewPost extends AppCompatActivity {
 
                 //키보드 내리기
                 manager.hideSoftInputFromWindow(viewcontents.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
 
                 //TODO
                 //수정된 내용 DB저장

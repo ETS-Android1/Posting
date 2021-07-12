@@ -96,21 +96,19 @@
             </LinearLayout>
         </LinearLayout>
 
-
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.1">
+            android:layout_weight="0.1"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
+                android:layout_height="match_parent">
                 <!--Title TextView-->
                 <EditText
                     android:id="@+id/Viewtitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
@@ -125,6 +123,7 @@
                     android:id="@+id/Viewcontents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/Viewtitle"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:background="@null"
@@ -132,35 +131,28 @@
                     android:textColor="@color/black"
                     android:textCursorDrawable="@color/black"
                     android:textSize="17.6dp"
-                    android:textStyle="normal"
-                    android:layout_below="@id/Viewtitle"/>
+                    android:textStyle="normal" />
 
 
-                <!--Image ListView-->
-                <HorizontalScrollView
-                    android:layout_width="400dp"
-                    android:layout_height="300dp"
-                    android:layout_below="@id/Viewcontents">
-                    <LinearLayout
-                        android:id="@+id/linear"
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewPager2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@id/Viewcontents"/>
+
+                    <me.relex.circleindicator.CircleIndicator3
+                        android:id="@+id/indicator"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-                    </LinearLayout>
-                </HorizontalScrollView>
-<!--                <ListView-->
-<!--                    android:id="@+id/Viewimglist"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="5dp"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:layout_marginRight="5dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:descendantFocusability="blocksDescendants"-->
-<!--                    android:nestedScrollingEnabled="false"-->
-<!--                    android:overScrollMode="never" />-->
+                        app:ci_drawable="@drawable/black_round"
+                        app:ci_height="7dp"
+                        app:ci_margin="4dp"
+                        app:ci_width="7dp"
+                        tools:ignore="MissingClass"
+                        android:layout_below="@+id/viewPager2"
+                        android:gravity="top"/>
             </RelativeLayout>
-        </androidx.core.widget.NestedScrollView>
-
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
