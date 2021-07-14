@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/PlusBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@drawable/grey_round"
+        android:background="@color/white"
         android:text="더보기"
-        android:textColor="@color/black"></Button>
+        android:textColor="@color/black"></androidx.appcompat.widget.AppCompatButton>
 </LinearLayout>

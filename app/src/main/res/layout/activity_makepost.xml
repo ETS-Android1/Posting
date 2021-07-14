@@ -9,18 +9,27 @@
 
     <include layout="@layout/toolbar_main" />
 
-    <EditText
-        android:id="@+id/maketitle"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:hint="제목"
-        android:singleLine="true"
-        android:textColor="@color/black"
-        android:textColorHint="#999999"
-        android:textSize="19dp"
-        android:textStyle="bold" />
+        app:counterEnabled="true"
+        app:counterMaxLength="20">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/maketitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:hint="제목"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="#999999"
+            android:textSize="19dp"
+            android:textStyle="bold"
+            android:maxLength="20"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <androidx.core.widget.NestedScrollView
@@ -33,20 +42,30 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/makecontents"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@null"
-                android:hint="여기를 눌러 새로운 소식을 남겨보세요."
-                android:inputType="textMultiLine"
-                android:textColor="@color/black"
-                android:textColorHint="#999999"
-                android:textSize="17.6sp"
-                android:singleLine="true"
-                android:textStyle="bold"/>
+                app:counterEnabled="true"
+                app:counterMaxLength="200">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/makecontents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@null"
+                    android:hint="새로운 소식"
+                    android:inputType="textMultiLine"
+                    android:maxLength="200"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="#999999"
+                    android:textSize="17.6sp"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <androidx.recyclerview.widget.RecyclerView

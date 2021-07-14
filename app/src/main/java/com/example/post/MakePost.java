@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -59,6 +60,7 @@ public class MakePost extends AppCompatActivity {
 
     EditText edit_title;
     EditText edit_article;
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,6 @@ public class MakePost extends AppCompatActivity {
 
         edit_title = (EditText) findViewById(R.id.maketitle);
         edit_article = (EditText) findViewById(R.id.makecontents);
-
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
