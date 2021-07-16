@@ -23,12 +23,12 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:hint="제목"
+            android:maxLength="20"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textColorHint="#999999"
             android:textSize="19dp"
-            android:textStyle="bold"
-            android:maxLength="20"/>
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -59,14 +59,12 @@
                     android:hint="새로운 소식"
                     android:inputType="textMultiLine"
                     android:maxLength="200"
-                    android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="#999999"
                     android:textSize="17.6sp"
                     android:textStyle="bold" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"

@@ -60,7 +60,6 @@ public class MakePost extends AppCompatActivity {
 
     EditText edit_title;
     EditText edit_article;
-    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +111,7 @@ public class MakePost extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (data.getClipData() == null)
                 Toast.makeText(MakePost.this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
 
@@ -144,7 +143,7 @@ public class MakePost extends AppCompatActivity {
 
             }
         } else {
-            super.onActivityResult(requestCode,resultCode,data);
+            super.onActivityResult(requestCode, resultCode, data);
             return;
         }
     }
@@ -171,13 +170,13 @@ public class MakePost extends AppCompatActivity {
         if (bmpWidth > width) {
             // 원하는 너비보다 클 경우의 설정
             float mWidth = bmpWidth / 100;
-            float scale = width/ mWidth;
+            float scale = width / mWidth;
             bmpWidth *= (scale / 100);
             bmpHeight *= (scale / 100);
         } else if (bmpHeight > height) {
             // 원하는 높이보다 클 경우의 설정
             float mHeight = bmpHeight / 100;
-            float scale = height/ mHeight;
+            float scale = height / mHeight;
             bmpWidth *= (scale / 100);
             bmpHeight *= (scale / 100);
         }
@@ -206,7 +205,7 @@ public class MakePost extends AppCompatActivity {
 
         int size = adapter.getItemCount();
         ArrayList<SelectedImage> img = adapter.images;
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             FinalUriList[i] = img.get(i).getImage();
         }
 
@@ -227,7 +226,7 @@ public class MakePost extends AppCompatActivity {
             edit_article.setError("내용을 입력하세요.");
             focusView = edit_article;
             cancel = true;
-        }else if(article.length() > 200){
+        } else if (article.length() > 200) {
             edit_article.setError("200자 까지만 가능합니다.");
             focusView = edit_article;
             cancel = true;
@@ -263,7 +262,7 @@ public class MakePost extends AppCompatActivity {
                                 Log.i("her: ", "here");
                                 Toast.makeText(getApplicationContext(), "정상적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
                                 Log.i("Length:", String.valueOf(count));
-                                if(UriList.length > 0) {
+                                if (UriList.length > 0) {
                                     for (int i = 0; i < count; i++) {
                                         Log.i("delete", String.valueOf(UriList[i]));
                                         getContentResolver().delete(UriList[i], null, null);
@@ -278,11 +277,11 @@ public class MakePost extends AppCompatActivity {
                     }
                 };
 
-                if(fullImagePath.length() > 1){
-                PostRequest postRequest = new PostRequest(title, article, date, fullImagePath.substring(0, fullImagePath.length() - 1), responseListener);
-                RequestQueue queue = Volley.newRequestQueue(MakePost.this);
-                queue.add(postRequest);
-                }else{
+                if (fullImagePath.length() > 1) {
+                    PostRequest postRequest = new PostRequest(title, article, date, fullImagePath.substring(0, fullImagePath.length() - 1), responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(MakePost.this);
+                    queue.add(postRequest);
+                } else {
                     PostRequest postRequest = new PostRequest(title, article, date, null, responseListener);
                     RequestQueue queue = Volley.newRequestQueue(MakePost.this);
                     queue.add(postRequest);
@@ -327,14 +326,14 @@ public class MakePost extends AppCompatActivity {
     //업로드 할 사진의 경로 가져오기
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private String getFilePathFromURI(Uri selectedImageUri) {
-        String[] proj= {MediaStore.Images.Media.DATA};
-        CursorLoader loader= new CursorLoader(this, selectedImageUri, proj, null, null, null);
-        Cursor cursor= loader.loadInBackground();
-        int column_index= cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(this, selectedImageUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
-        String result= cursor.getString(column_index);
+        String result = cursor.getString(column_index);
         cursor.close();
-        return  result;
+        return result;
     }
 
     private void showLoading() {
@@ -351,8 +350,8 @@ public class MakePost extends AppCompatActivity {
         }
     }
 
-    public void BackBtn(View view){
-        if(UriList.length > 0) {
+    public void BackBtn(View view) {
+        if (UriList.length > 0) {
             for (int i = 0; i < count; i++) {
                 Log.i("delete", String.valueOf(UriList[i]));
                 getContentResolver().delete(UriList[i], null, null);

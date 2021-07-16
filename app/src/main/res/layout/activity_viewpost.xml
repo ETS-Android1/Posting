@@ -57,6 +57,31 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
+                Delete Button
+                <ImageButton
+                    android:id="@+id/ViewDeleteBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:onClick="OnDeleteHandler"
+                    app:srcCompat="@drawable/ic_delete_btn"
+                    tools:ignore="VectorDrawableCompat"
+                    android:visibility="invisible"
+                    android:saveEnabled="false"></ImageButton>
+
+                <!--Edit Button-->
+                <ImageButton
+                    android:id="@+id/ViewEditBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    app:srcCompat="@drawable/ic_edit_btn"
+                    tools:ignore="VectorDrawableCompat"></ImageButton>
+
                 <!--Edit Ok Button-->
                 <ImageButton
                     android:id="@+id/ViewOkBtn"
@@ -70,28 +95,6 @@
                     app:srcCompat="@drawable/ic_ok"
                     tools:ignore="VectorDrawableCompat"></ImageButton>
 
-                <!--Edit Button-->
-                <ImageButton
-                    android:id="@+id/ViewEditBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    app:srcCompat="@drawable/ic_edit_btn"
-                    tools:ignore="VectorDrawableCompat"></ImageButton>
-
-                <!--Delete Button-->
-                <ImageButton
-                    android:id="@+id/ViewDeleteBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:onClick="OnDeleteHandler"
-                    app:srcCompat="@drawable/ic_delete_btn"
-                    tools:ignore="VectorDrawableCompat"></ImageButton>
             </LinearLayout>
         </LinearLayout>
 
@@ -101,58 +104,64 @@
             android:layout_weight="0.1"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/viewPager2"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:orientation="horizontal" />
+                    android:layout_height="match_parent">
 
-                <me.relex.circleindicator.CircleIndicator3
-                    android:id="@+id/indicator"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/viewPager2"
-                    android:gravity="top"
-                    app:ci_drawable="@drawable/black_round"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    app:ci_height="5dp"
-                    app:ci_margin="4dp"
-                    app:ci_width="5dp"
-                    tools:ignore="MissingClass"/>
-                <!--Title TextView-->
-                <EditText
-                    android:id="@+id/Viewtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:text="제목"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@color/black"
-                    android:textSize="19sp"
-                    android:textStyle="bold"
-                    android:layout_below="@id/indicator"/>
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewPager2"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:orientation="horizontal" />
 
-                <!--Contents TextView-->
-                <EditText
-                    android:id="@+id/Viewcontents"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/Viewtitle"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@null"
-                    android:text="내용"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@color/black"
-                    android:textSize="17.6dp"
-                    android:textStyle="normal" />
-            </RelativeLayout>
+                    <me.relex.circleindicator.CircleIndicator3
+                        android:id="@+id/indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/viewPager2"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="top"
+                        app:ci_drawable="@drawable/black_round"
+                        app:ci_height="5dp"
+                        app:ci_margin="4dp"
+                        app:ci_width="5dp"
+                        tools:ignore="MissingClass" />
+
+                    <!--Title TextView-->
+                    <EditText
+                        android:id="@+id/Viewtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/indicator"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:text="제목"
+                        android:textColor="@color/black"
+                        android:textCursorDrawable="@color/black"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <!--Contents TextView-->
+                    <EditText
+                        android:id="@+id/Viewcontents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/Viewtitle"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@null"
+                        android:text="내용"
+                        android:textColor="@color/black"
+                        android:textCursorDrawable="@color/black"
+                        android:textSize="17.6dp"
+                        android:textStyle="normal" />
+                </RelativeLayout>
+            </ScrollView>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

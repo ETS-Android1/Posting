@@ -33,14 +33,18 @@ import me.relex.circleindicator.CircleIndicator3;
 public class ViewPost extends AppCompatActivity {
     ViewPager2 viewPager2;
     CircleIndicator3 indicator;
+    private ArrayList<PostListItem> listItems = new ArrayList<PostListItem>();
+    private PostListAdapter adapter;
+    int pos;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewpost);
 
-        PostListAdapter adapter;
         final InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         viewPager2 = findViewById(R.id.viewPager2);
         indicator = (CircleIndicator3)findViewById(R.id.indicator);
+        adapter = new PostListAdapter(ViewPost.this);
 
         //작성자 TextView
         TextView viewwriter = (TextView)findViewById(R.id.ViewWriter);
@@ -53,9 +57,6 @@ public class ViewPost extends AppCompatActivity {
 
         //내용 TextViw
         EditText viewcontents = (EditText) findViewById(R.id.Viewcontents);
-
-        //이미지 리스트 ListView
-//        ListView viewimg = (ListView)findViewById(R.id.Viewimglist);
 
         //수정 버튼
         ImageButton editbtn = (ImageButton)findViewById(R.id.ViewEditBtn);
@@ -73,6 +74,7 @@ public class ViewPost extends AppCompatActivity {
         String title = intent.getStringExtra("Title");
         String contents = intent.getStringExtra("Contents");
         String[] imgURL = intent.getStringArrayExtra("ImgURL");
+        pos = intent.getIntExtra("Pos", 0);
 
         //받아온 값 Setting
         viewwriter.setText(writer);
@@ -167,8 +169,8 @@ public class ViewPost extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getApplicationContext(), "확인", Toast.LENGTH_SHORT).show();
-                //TODO
-                //삭제 구현
+//                adapter.removeItem(pos);
+//                finish();
             }
         });
 

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         View footer = getLayoutInflater().inflate(R.layout.plusbtn, null, false);
 
 
-        /*리스트뷰*/
+        /*리스트뷰 아이템 Example*/
 
         // 날짜를 문자 배열로 초기화
         String[] dateList = {"2021-06-01", "2021-06-04", "2021-06-07", "2021-06-09", "2021-06-20"};
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         // 제목 문자 배열로 초기화
         String[] titleList = {"제목A", "제목B", "제목C", "제목D", "제목E"};
 
-        String contents = "이 소설의 주제는 순수한 사랑이라고 할 수 있다. 심지어 매번 징검다리의 한가운데에 앉아 있었다. 이는 소녀는 의도적으로 소년을 갈구하는 모습이고 소년은 서울 소녀의 꾀임에 넘어간 것이다.이 소설의 주제는 순수한 사랑이라고 할 수 있다. 심지어 매번 징검다리의 한가운데에 앉아 있었다. 이는 소녀는 의도적으로 소년을 갈구하는 모습이고 소년은 서울 소녀의 꾀임에 넘어간 것이다.";
+        String contents = "이 소설의 주제는 순수한 사랑이라고 할 수 있다. 심지어 매번 징검다리의 한가운데에 앉아 있었다. 이는 소녀는 의도적으로 소년을 갈구하는 모습이고 소년은 서울 소녀의 꾀임에 넘어간 것이다.";
 
 
         String staticURL = "https://sikigobucket.s3.ap-northeast-2.amazonaws.com/PostImg/";
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("Contents", contents);//내용
                 intent.putExtra("Date", date);//날짜
                 intent.putExtra("ImgURL", imgURL);//이미지 값
+                intent.putExtra("Pos", position);
 
                 startActivity(intent);
                 overridePendingTransition(R.anim.horizon_enter, R.anim.horizon_exit);
@@ -98,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int originSize = adapter.getSize();//원래 사이즈
+                Log.d("TAG", String.valueOf(originSize));
                 int editSize = adapter.getCount();//현재 사이즈
+                Log.d("TAG", String.valueOf(editSize));
 
                 if (editSize == originSize) {
                     Toast.makeText(MainActivity.this, "마지막 게시물입니다.", Toast.LENGTH_SHORT).show();
