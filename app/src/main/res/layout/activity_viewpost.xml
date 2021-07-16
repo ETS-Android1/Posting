@@ -116,7 +116,10 @@
                         android:id="@+id/viewPager2"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
-                        android:orientation="horizontal" />
+                        android:orientation="horizontal"
+                        android:background="@drawable/background_rounding"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
 
                     <me.relex.circleindicator.CircleIndicator3
                         android:id="@+id/indicator"
@@ -138,8 +141,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/indicator"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:text="제목"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@color/black"
@@ -152,8 +155,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/Viewtitle"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@null"
                         android:text="내용"
                         android:textColor="@color/black"

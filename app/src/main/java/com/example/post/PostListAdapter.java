@@ -76,6 +76,7 @@ public class PostListAdapter extends BaseAdapter {
         TextView txt_title = (TextView) convertView.findViewById(R.id.Title);
         TextView txt_contents = (TextView) convertView.findViewById(R.id.Content);
         ImageView img_thumbnail = (ImageView) convertView.findViewById(R.id.Thumbnail);
+        img_thumbnail.setClipToOutline(true);
         ImageButton btn_delete = (ImageButton) convertView.findViewById(R.id.DeleteBtn);
 
         PostListItem listItem = listItems.get(position);

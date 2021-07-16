@@ -3,6 +3,8 @@ package com.example.post;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -64,9 +67,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ItemViewHolder
     class ItemViewHolder extends RecyclerView.ViewHolder {
         ImageView list_image;
 
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public ItemViewHolder(View itemView) {
             super(itemView);
             list_image = itemView.findViewById(R.id.list_image);
+            list_image.setClipToOutline(true);
         }
 
         public void onBind(SelectedImage selectedimage) {

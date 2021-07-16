@@ -111,7 +111,10 @@
             android:layout_height="match_parent"
             android:layout_weight="0.4"
             app:srcCompat="@drawable/thumbnail1"
-            android:scaleType="fitXY"></ImageView>
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/background_rounding"></ImageView>
 
         <!--BorderLine-->
         <ImageView
