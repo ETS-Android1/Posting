@@ -2,7 +2,7 @@
 
 ## Description
 - Internship assignment.
-- Working at **Flash 21 Co., Ltd.
+- Working at **Flash 21 Co., Ltd.**
 
 ## Introduction
 This feature was implemented to add to an existing app.
